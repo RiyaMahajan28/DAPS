@@ -1,0 +1,78 @@
+import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../../services/api.service';
+import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-records',
+  standalone: true,
+  imports: [ 
+    CommonModule,
+    MatTableModule,
+    MatButtonModule,
+    FormsModule,
+    ReactiveFormsModule
+    ],
+  templateUrl: './records.component.html',
+  styleUrl: './records.component.css'
+})
+export class RecordsComponent implements OnInit{
+  records: any[] = [];
+  filteredRecords: any[] = []; // filtered list to show in table
+  searchTerm: string = '';
+
+  constructor(private api: ApiService, private router: Router) {}
+  
+  ngOnInit(): void {
+  this.api.getClients().subscribe({
+    next: (data:any) => {
+      this.records = data?.data;
+        console.log(this.records)
+
+    },
+    error: (err) => console.error(err)
+  });
+}
+
+
+  // editRecord(id: number) {
+  //   this.router.navigate(['/record-form', id]);
+  // }
+
+  editRecord(id: number){
+    this.router.navigate(['/record-form'],{state:{recordId :id}})
+  }
+ 
+  addRecord() {
+    this.router.navigate(['/record-form']);
+  }
+  logout(): void {
+  // Clear all local data
+  localStorage.clear();
+
+  // Prevent browser back navigation
+  history.pushState(null,'',window.location.href);
+  window.onpopstate = function(){
+    history.go(1);
+  }
+
+  // Navigate back to login page (adjust route if different)
+  this.router.navigate(['/login']).then(()=>{
+    window.location.reload()
+  });
+
+  console.log('User logged out successfully');
+}
+  // onSearch() {
+  //   const term = this.searchTerm.toLowerCase();
+
+  //   // Filter by clientName or shortCode
+  //   this.filteredRecords = this.records.filter(client =>
+  //     client.clientName.toLowerCase().includes(term) ||
+  //     client.shortCode.toLowerCase().includes(term)
+  //   );
+  // }
+}

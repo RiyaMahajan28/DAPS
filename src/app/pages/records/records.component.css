@@ -1,0 +1,120 @@
+* {
+  padding: 2px;   /* 👈 All elements get 2px padding */
+  margin: 0;
+  box-sizing: border-box;
+}
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background:rgb(210, 83, 9); */
+  background: #025a86;
+  padding: 2px;
+  color: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Navbar Right */
+.navbar-right {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Search box */
+.navbar-right input {
+  padding: 0.5rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+  min-width: 200px;
+}
+
+/* Add Button */
+.add-btn {
+  background: #10b981; /* green */
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.add-btn:hover {
+  background: #059669; /* darker green */
+}
+
+/* Logout Button */
+.logout-btn {
+  background: #ef4444; /* red */
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.logout-btn:hover {
+  background: #dc2626; /* darker red on hover */
+}
+
+.p-6{
+    margin-top: 80px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+
+th {
+  background-color: #f3f4f6;
+  font-weight: bold;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+}
+
+tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+tr:hover {
+  background-color: #f1f5f9;
+}
+
+.edit-btn {
+  background: #0ea5e9;  /* cyan-blue */
+  color: white;
+  padding: 2px 8px;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.edit-btn:hover {
+  background: #0284c7;  /* darker cyan */
+}

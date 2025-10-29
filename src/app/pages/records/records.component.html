@@ -1,0 +1,76 @@
+
+<div class="navbar">
+  <div class="navbar-left">
+    <h1 class="logo">Client Records</h1>
+  </div>
+
+  <div class="navbar-right">
+    <!-- Search box -->
+    <!-- <input
+      type="text"
+      placeholder="Search clients..."
+         [(ngModel)]="searchTerm"
+      (input)="onSearch()"/> -->
+
+    <!-- Add Client Button -->
+    <button class="add-btn" (click)="addRecord()">
+      + Add Client
+    </button>
+     <!-- ✅ Logout button beside Save -->
+  <button class="logout-btn"  (click)="logout()">
+    Logout
+  </button>
+  </div>
+</div>
+<div class="p-6">
+  <div class="overflow-x-auto">
+    <table class="min-w-full border border-gray-300 rounded-lg shadow-sm">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="border px-4 py-2 text-left">ID</th>
+          <th class="border px-4 py-2 text-left">Client Name</th>
+          <th class="border px-4 py-2 text-left">Short Code</th>
+          <th class="border px-4 py-2 text-left">Empannelment</th>
+          <th class="border px-4 py-2 text-left">Status</th>
+          <th class="border px-4 py-2 text-left">Created On</th>
+          <th class="border px-4 py-2 text-left">Created By</th>
+          <th class="border px-4 py-2 text-left">Company ID</th>
+          <th class="border px-4 py-2 text-left">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of records" class="hover:bg-gray-50">
+          <td class="border px-4 py-2">{{ client.clientId }}</td>
+          <td class="border px-4 py-2 font-medium">{{ client.clientName }}</td>
+          <td class="border px-4 py-2">{{ client.shortCode }}</td>
+          <td class="border px-4 py-2">{{ client.empannelment }}</td>
+          <td class="border px-4 py-2">
+            <span 
+              class="px-2 py-1 rounded text-white text-sm"
+              [ngClass]="{
+                'bg-green-500': client.status === 'Y',
+                'bg-red-500': client.status === 'N'
+              }">
+              {{ client.status === 'Y' ? 'Active' : 'Inactive' }}
+            </span>
+          </td>
+          <td class="border px-4 py-2">{{ client.created_on }}</td>
+          <td class="border px-4 py-2">{{ client.created_by || '-' }}</td>
+          <td class="border px-4 py-2">{{ client.companyId }}</td>
+          <td class="border px-4 py-2 text-center">
+            <button 
+              class="edit-btn bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
+              (click)="editRecord(client.clientId)">
+              Edit
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Empty state -->
+  <p *ngIf="records.length === 0" class="mt-4 text-gray-500">
+    No clients found.
+  </p>
+</div>

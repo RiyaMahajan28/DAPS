@@ -1,0 +1,70 @@
+<div class="form-container">
+  <div class="form-card">
+    <!-- Dynamic title -->
+    <h2 class="form-title">
+      {{ isEdit ? 'Edit Client' : 'Add Client' }}
+    </h2>
+
+    <form [formGroup]="recordForm" (ngSubmit)="onSave()">
+
+      <!-- Client Name -->
+      <div class="form-group">
+        <label>Client Name</label>
+        <input type="text" formControlName="clientName" placeholder="Enter Client Name" />
+        <p class="error" *ngIf="recordForm.get('clientName')?.invalid && recordForm.get('clientName')?.touched">
+          Client Name is required
+        </p>
+      </div>
+
+      
+      <!-- ✅ Company Dropdown -->
+      <div class="form-group">
+        <label>Company</label>
+        <select formControlName="companyId">
+          <option value="">-- Select Company --</option>
+          <option *ngFor="let c of companies" [value]="c.companyId">{{ c.companyName }}</option>
+        </select>
+        <p class="error" *ngIf="recordForm.get('companyId')?.invalid && recordForm.get('companyId')?.touched">
+          Company selection is required
+        </p>
+      </div>
+
+      <!-- Short Code -->
+      <div class="form-group">
+        <label>Short Code</label>
+        <input type="text" formControlName="shortCode" placeholder="Enter Short Code" />
+        <p class="error" *ngIf="recordForm.get('shortCode')?.invalid && recordForm.get('shortCode')?.touched">
+          Short Code is required
+        </p>
+      </div>
+
+      <!-- Status -->
+      <!-- <div class="form-group">
+        <label>Status</label>
+        <select formControlName="status">
+          <option value="">-- Select Status --</option>
+          <option value="Active">Yes</option>
+          <option value="Inactive">No</option>
+        </select>
+        <p class="error" *ngIf="recordForm.get('status')?.invalid && recordForm.get('status')?.touched">
+          Status is required
+        </p>
+      </div> -->
+<div class="form-group">
+        <label>Status</label>
+        <input type="text" formControlName="status" placeholder="Enter status" />
+      </div>
+      <!-- Empannelment -->
+      <div class="form-group">
+        <label>Empannelment</label>
+        <input type="text" formControlName="empannelment" placeholder="Enter Empannelment" />
+      </div>
+
+      <!-- Save/Update button -->
+      <button type="submit" class="btn-primary">
+        {{ isEdit ? 'Update' : 'Save' }}
+      </button>
+      <button type="button" class="btn-primary" (click)="goBack()">Back</button>
+    </form>
+  </div>
+</div>
