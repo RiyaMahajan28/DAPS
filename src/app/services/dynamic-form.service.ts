@@ -1,24 +1,3 @@
-// import { Injectable } from '@angular/core';
-// import { DynamicField } from '../models/form-field.model';
-// import { FormGroup, FormControl, Validators } from '@angular/forms';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class DynamicFormService {
-
-// buildForm(fields: DynamicField[]): FormGroup {
-//     const group: any = {};
-
-//     fields.forEach(field => {
-//       group[field.label] = new FormControl(
-//         field.value || '',
-//         field.required ? Validators.required : []
-//       );
-//     });
-
-//     return new FormGroup(group);
-//   }}
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicField } from '../models/form-field.model';
