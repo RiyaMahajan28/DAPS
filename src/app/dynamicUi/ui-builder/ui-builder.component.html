@@ -1,0 +1,166 @@
+<div class="builder-container">
+
+  <!-- LEFT SIDE MENU -->
+  <div
+    class="palette"
+    cdkDropList
+    #palette="cdkDropList"
+    [cdkDropListData]="components"
+    [cdkDropListConnectedTo]="[canvas]"
+  >
+    <div
+      class="palette-item"
+      *ngFor="let comp of components"
+      cdkDrag
+    >
+      {{ comp.label }}
+    </div>
+
+    <button type="button" (click)="generateForm()" class="gen-btn">Generate Form</button>
+  </div>
+
+  <!-- RIGHT SIDE CANVAS (Dropped Fields View) -->
+  <div
+    class="canvas"
+    cdkDropList
+    #canvas="cdkDropList"
+    [cdkDropListData]="formFields"
+    [cdkDropListConnectedTo]="[palette]"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <div *ngFor="let field of formFields; let i = index" class="canvas-field">
+      <div class="canvas-field-left">
+        {{ field.label }} <small class="type-tag">({{ field.type }})</small>
+      </div>
+      <div class="canvas-field-right">
+        <button (click)="removeField(i)" class="small-btn">Delete</button>
+      </div>
+    </div>
+    <div *ngIf="formFields.length === 0" class="canvas-empty">Drop fields here</div>
+  </div>
+
+</div>
+
+<!-- ======================
+     CONFIG MODAL (shown immediately after drop)
+     ====================== -->
+<div class="modal" [class.show]="showConfigModal">
+  <div class="modal-content">
+    <span class="close" (click)="cancelConfig()">&times;</span>
+    <h3 class="modal-title">Configure Field</h3>
+
+    <div *ngIf="configField" class="config-form">
+      <label class="form-label">Label</label>
+      <input class="form-input" [(ngModel)]="configField.label" placeholder="e.g. Username" />
+
+      <div class="form-row">
+        <label><input type="checkbox" [(ngModel)]="configField.required" /> Required</label>
+      </div>
+
+      <!-- Min / Max for textbox & textarea -->
+      <div *ngIf="configField.type === 'textbox' || configField.type === 'textarea'">
+        <div class="form-row">
+          <label>Min Length</label>
+          <input type="number" class="form-input" [(ngModel)]="configField.minLength" />
+        </div>
+        <div class="form-row">
+          <label>Max Length</label>
+          <input type="number" class="form-input" [(ngModel)]="configField.maxLength" />
+        </div>
+      </div>
+
+      <!-- Validation types only for textbox -->
+      <div *ngIf="configField.type === 'textbox'">
+        <label class="form-label">Validation Type</label>
+        <select class="form-select" [(ngModel)]="configField.validationType">
+          <option value="none">None</option>
+          <option value="alphabets">Alphabets only</option>
+          <option value="numbers">Numbers only</option>
+          <option value="alphanumeric">Alphanumeric</option>
+          <option value="email">Email</option>
+          <option value="custom">Custom Regex</option>
+        </select>
+
+        <div *ngIf="configField.validationType === 'custom'">
+          <label class="form-label">Custom Regex (without / /)</label>
+          <input class="form-input" [(ngModel)]="configField.customPattern" placeholder="e.g. ^[A-Z]{3}[0-9]{2}$" />
+        </div>
+      </div>
+
+      <!-- For dropdown & radio you can edit options -->
+      <div *ngIf="configField.type === 'dropdown' || configField.type === 'radio'">
+        <label class="form-label">Options (comma separated)</label>
+        <input class="form-input"
+               [(ngModel)]="configField.options"
+               [ngModel]="(configField.options || []).join(',')"
+                />
+      </div>
+
+      <!-- Image: only required (we already set) -->
+
+      <div class="modal-actions">
+        <button class="btn-submit" (click)="saveConfig()">Save</button>
+        <button class="small-btn" (click)="cancelConfig()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================
+     GENERATED FORM MODAL
+     ====================== -->
+<div class="modal" [class.show]="showGeneratedModal">
+  <div class="modal-content">
+    <span class="close" (click)="closeGeneratedModal()">&times;</span>
+    <h3 class="modal-title">Fill & Submit</h3>
+
+    <form *ngIf="dynamicForm" [formGroup]="dynamicForm" (ngSubmit)="submitForm()">
+
+      <div *ngFor="let field of formFields" class="form-field">
+        <label class="form-label">{{ field.label }}</label>
+
+        <!-- textbox -->
+        <input *ngIf="field.type === 'textbox'" class="form-input"
+               [formControlName]="field.controlName" />
+
+        <!-- textarea -->
+        <textarea *ngIf="field.type === 'textarea'" class="form-textarea"
+                  [formControlName]="field.controlName"></textarea>
+
+        <!-- dropdown -->
+        <select *ngIf="field.type === 'dropdown'" class="form-select"
+                [formControlName]="field.controlName">
+          <option value="">Select</option>
+          <option *ngFor="let opt of field.options" [value]="opt">{{ opt }}</option>
+        </select>
+
+        <!-- radio -->
+        <div *ngIf="field.type === 'radio'" class="form-radio-group">
+          <label *ngFor="let opt of field.options" class="form-radio-label">
+            <input type="radio" [value]="opt" [formControlName]="field.controlName" /> {{ opt }}
+          </label>
+        </div>
+
+        <!-- image -->
+        <input *ngIf="field.type === 'image'" type="file" class="form-file"
+               (change)="onFileSelect($event, field.controlName!)" />
+
+        <!-- Validation messages -->
+        <div class="error" *ngIf="dynamicForm.get(field.controlName!)?.touched && dynamicForm.get(field.controlName!)?.errors">
+          <div *ngIf="dynamicForm.get(field.controlName!)?.errors?.['required']">{{ field.label }} is required.</div>
+          <div *ngIf="dynamicForm.get(field.controlName!)?.errors?.['minlength']">
+            Minimum length is {{ field.minLength }}
+          </div>
+          <div *ngIf="dynamicForm.get(field.controlName!)?.errors?.['maxlength']">
+            Maximum length is {{ field.maxLength }}
+          </div>
+          <div *ngIf="dynamicForm.get(field.controlName!)?.errors?.['email']">Invalid email format.</div>
+          <div *ngIf="dynamicForm.get(field.controlName!)?.errors?.['pattern']">Invalid format.</div>
+        </div>
+
+      </div>
+
+      <button class="btn-submit" type="submit" [disabled]="dynamicForm.invalid">Submit</button>
+    </form>
+  </div>
+</div>

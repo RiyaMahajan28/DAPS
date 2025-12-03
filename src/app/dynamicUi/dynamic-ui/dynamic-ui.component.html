@@ -1,0 +1,16 @@
+<p>dynamic-ui works!</p>
+<select [(ngModel)]="role">
+  <option value="admin">Admin</option>
+  <option value="user">User</option>
+</select>
+
+<!-- Dynamic UI Rendering -->
+<div *ngIf="role === 'admin'">
+  <h3>Admin Dashboard</h3>
+  <p>Manage users, settings, and reports.</p>
+</div>
+
+<div *ngIf="role === 'user'">
+  <h3>User Dashboard</h3>
+  <p>View your profile and activity.</p>
+</div>

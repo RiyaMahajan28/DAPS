@@ -28,10 +28,10 @@ loginForm: FormGroup;
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private api: ApiService   //  Inject ApiService
+    private api: ApiService   
   ) {
     this.loginForm = this.fb.group({
-      username: ['',Validators.required],   //  API expects emp_code
+      username: ['',Validators.required],  
       password: ['', Validators.required]
     });
   }

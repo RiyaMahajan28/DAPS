@@ -1,0 +1,21 @@
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+}
+.main-content.no-sidebar {
+  margin-left: 0 !important;
+  padding: 0 !important;
+}
+
+/* When sidebar collapses */
+.main-content.collapsed {
+  margin-left: 60px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0 !important;
+  }
+}

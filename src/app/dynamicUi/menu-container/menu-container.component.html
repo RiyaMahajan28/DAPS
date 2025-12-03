@@ -1,0 +1,12 @@
+<p>menu-container works!</p>
+<button *ngFor="let item of menu"
+        (click)="changePage(item.value)"
+        style="margin-right: 10px;">
+        {{item.label}}
+</button>
+
+<hr>
+
+<app-home *ngIf="selected === 'home'"></app-home>
+<app-profile *ngIf="selected === 'profile'"></app-profile>
+<app-settings *ngIf="selected === 'settings'"></app-settings>

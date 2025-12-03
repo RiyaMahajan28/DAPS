@@ -1,11 +1,13 @@
 /* ===================================
    🌟 MAIN CONTAINER
 =================================== */
-.main-container {
-  padding: 20px;
-}
+
 
 .main-container h2 {
+  position: sticky;
+  top: 0;
+  left: 0;
+ z-index: 1000;
   background: #003366;
   color: white;
   padding: 10px 20px;

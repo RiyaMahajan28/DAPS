@@ -1,0 +1,34 @@
+<!-- <div class="sidebar" [class.collapsed]="isCollapsed">
+  <button class="toggle-btn" (click)="toggleSidebar()">
+    {{ isCollapsed ? '☰' : '✖' }}
+  </button>
+
+  <ul *ngIf="!isCollapsed">
+    <li (click)="navigateTo('/records')">Records</li>
+    <li (click)="navigateTo('/locations')">Locations</li>
+  </ul>
+</div> -->
+<div class="sidebar" [class.collapsed]="isCollapsed">
+  <button class="toggle-btn" (click)="toggleSidebar()">
+    {{ isCollapsed ? '☰' : '✖' }}
+  </button>
+
+   <ul class="menu">
+    <li (click)="navigateTo('/records')">
+      <span class="icon">📄</span>
+      <span class="text">Records</span>
+    </li>
+
+    <li (click)="navigateTo('/locations')">
+      <span class="icon">📍</span>
+      <span class="text">Locations</span>
+    </li>
+  </ul>
+
+  
+     <button class="logout-btn" (click)="logout()" tooltip="Logout">
+    <span *ngIf="!isCollapsed" class="fas fa-power-off" ></span>
+     <span class="logout-text"></span>
+  </button>
+</div>
+

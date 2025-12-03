@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+// import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
   selector: 'app-records',
@@ -25,7 +26,9 @@ export class RecordsComponent implements OnInit{
   searchTerm: string = '';
 
   constructor(private api: ApiService, private router: Router) {}
-  
+  // toggleSidebar() {
+//   this.sidebarService.toggle();
+// }
   ngOnInit(): void {
   this.api.getClients().subscribe({
     next: (data:any) => {
