@@ -1,12 +1,21 @@
-<ng-container *ngIf="!isLoginPage">
-  <app-sidebar (collapsedChange)="onSidebarToggle($event)"></app-sidebar>
-</ng-container>
+<!-- Header -->
+<app-header
+  *ngIf="!isLoginPage"
+  [isSidebarCollapsed]="isSidebarCollapsed">
+</app-header>
 
-<div class="main-content"
- [class.collapsed]="isSidebarCollapsed"
- [class.no-sidebar]="isLoginPage">
+<!-- Sidebar -->
+<app-sidebar
+  *ngIf="!isLoginPage"
+  (collapsedChange)="onSidebarToggle($event)">
+</app-sidebar>
+
+<!-- Main content -->
+<div
+  class="main-content"
+  [class.collapsed]="isSidebarCollapsed"
+  [class.no-sidebar]="isLoginPage">
+
   <router-outlet></router-outlet>
 </div>
-
-
 

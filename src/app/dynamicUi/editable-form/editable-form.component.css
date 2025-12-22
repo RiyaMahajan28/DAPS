@@ -1,0 +1,64 @@
+.editable-form-container { padding: 16px; }
+.controls { margin-bottom: 12px; }
+.builder-area { border: 1px dashed #bbb; padding: 8px; margin-bottom: 12px; }
+.generated-form .form-group { margin-bottom: 10px; }
+.error { color: #b00020; font-size: 12px; }
+
+/* Table styles */
+.table-wrap { margin-top: 12px; }
+.table-title { margin-bottom: 8px; }
+.forms-table { width: 100%; border-collapse: collapse; }
+.forms-table th, .forms-table td { padding: 10px; border: 1px solid #e0e0e0; text-align: left; }
+.forms-table thead { background: #f5f7fa; }
+.link-like { background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; padding: 0; }
+.btn { padding: 6px 10px; margin-right: 6px; border-radius: 6px; border: none; cursor: pointer; }
+.btn.edit { background: #1e88e5; color: white; }
+.btn.delete { background: #e53935; color: white; }
+/* add-fields button styling */
+.btn.add-fields { background: #0b74de; color: white; min-width: 110px; border-radius: 6px; }
+
+/* Modal styles to match screenshot */
+.modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.35); }
+.modal-content { position: relative; background: #fff; width: 480px; max-width: calc(100% - 32px); border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); padding: 20px 24px; z-index: 1001; display: flex; flex-direction: column; max-height: 80vh; }
+.modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.modal-header h3 { margin: 0; text-align: center; width: 100%; font-size: 20px; }
+.modal .close { background: transparent; border: none; font-size: 22px; cursor: pointer; }
+.modal-footer { margin-top: 12px; display:flex; gap:8px; justify-content: flex-end; }
+.generated-form { overflow: auto; flex: 1 1 auto; }
+
+/* Improve form spacing inside modal */
+.generated-form .form-group { margin-bottom: 14px; display: flex; flex-direction: column; }
+.generated-form .form-group label { display: block; margin-bottom: 6px; font-weight: 600; color: #333; }
+.generated-form input[type="text"],
+.generated-form input[type="number"],
+.generated-form select,
+.generated-form textarea {
+	width: 100%;
+	padding: 8px 10px;
+	border: 1px solid #d0d7de;
+	border-radius: 6px;
+	box-sizing: border-box;
+	font-size: 14px;
+}
+.generated-form textarea { min-height: 80px; resize: vertical; }
+.form-radio-group { display: flex; gap: 12px; align-items: center; margin-top: 6px; }
+.form-radio-group label { font-weight: 400; }
+
+/* Make modal header stand out and center title */
+.modal-header h3 { font-size: 18px; font-weight: 700; color: #222; }
+
+/* Ensure footer buttons are nicely spaced and aligned */
+.modal-footer { margin-top: 12px; display:flex; gap:8px; justify-content: flex-end; align-items: center; }
+.modal-footer .update-btn { min-width: 110px; }
+.modal-footer .edit-btn { min-width: 90px; }
+
+/* Responsive tweaks */
+@media (max-width: 520px) {
+	.modal-content { width: calc(100% - 24px); padding: 16px; }
+	.modal-header h3 { font-size: 16px; }
+}
+.edit-btn, .close-btn { padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; }
+.edit-btn { background: #1e88e5; color: white; }
+.close-btn { background: #eee; color: #333; }
+.update-btn { background: #1976d2; color: white; padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; }

@@ -1,0 +1,94 @@
+<div class="editable-form-container">
+  <h2>Editable Form</h2>
+
+  <div class="controls">
+    <button type="button" (click)="createNew()">New Form</button>
+    <button type="button" (click)="saveForm()" [disabled]="!editMode">Save Form</button>
+  </div>
+
+  <!-- Builder area shown only when editing a specific form or creating new -->
+  <div *ngIf="editMode" class="builder-area">
+    <label>Edit form (drag & drop to add fields)</label>
+    <app-ui-builder [initialFields]="schema" (fieldDropped)="onFieldDropped($event)"></app-ui-builder>
+  </div>
+
+    <div *ngIf="submissions.length > 0" class="table-wrap">
+      <h3 class="table-title">Saved Forms</h3>
+      <table class="forms-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Form Name</th>
+            <th>Created On</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of submissions; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td><button class="link-like" (click)="openSubmissionModal(i)">Form {{ i + 1 }}</button></td>
+            <td>{{ s.createdAt | date:'short' }}</td>
+            <td>
+              <button class="btn edit" (click)="editSubmission(i)">Edit</button>
+              <button class="btn delete" (click)="deleteSubmission(i)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  <!-- Modal popup to show selected form -->
+  <div class="modal" *ngIf="showFormModal">
+    <div class="modal-backdrop" (click)="closeFormModal()"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Form {{ selectedIndex !== null ? (selectedIndex + 1) : '' }}</h3>
+        <button class="close" (click)="closeFormModal()">&times;</button>
+      </div>
+
+      <form *ngIf="schema && schema.length > 0" [formGroup]="form" class="generated-form">
+    <div *ngFor="let f of schema">
+      <div class="form-group">
+        <label>{{ f.label }}</label> 
+
+   <input *ngIf="f.type === 'textbox'"
+     [formControlName]="f.controlName"
+     type="text" />
+
+        <textarea *ngIf="f.type === 'textarea'" [formControlName]="f.controlName"></textarea>
+
+        <select *ngIf="f.type === 'dropdown'" [formControlName]="f.controlName">
+          <option *ngFor="let opt of f.options || []" [value]="opt">{{ opt }}</option>
+        </select>
+
+        <div *ngIf="f.type === 'radio'">
+          <label *ngFor="let opt of f.options || []">
+            <input type="radio" [formControlName]="f.controlName" [value]="opt" /> {{ opt }}
+          </label>
+        </div>
+
+        <input *ngIf="f.type === 'image'" type="file" [formControlName]="f.controlName" />
+
+        <div class="error" *ngIf="form.get(f.controlName)?.invalid && form.get(f.controlName)?.touched">
+          This field is required
+        </div>
+      </div>
+    </div>
+      </form>
+
+      <div class="modal-footer">
+  <!-- Show Update when in editMode (editing a form) -->
+  <button *ngIf="editMode" type="button" class="update-btn" (click)="saveForm(); closeFormModal()">Update</button>
+  <!-- Add more fields: close modal and open builder area so user can drag & drop -->
+  <button *ngIf="editMode" type="button" class="btn add-fields" (click)="addMoreFields(selectedIndex!)">Add Fields</button>
+  <button *ngIf="!editMode" type="button" class="edit-btn" (click)="editSubmission(selectedIndex!)">Edit</button>
+        <button type="button" class="close-btn" (click)="closeFormModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- If no form is selected / no schema, show a friendly empty state -->
+  <div *ngIf="(!schema || schema.length === 0) && submissions.length === 0" class="empty-state">
+    No saved forms yet. Click "New Form" to create one or generate & submit a form from the UI Builder.
+  </div>
+</div>

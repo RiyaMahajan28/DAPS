@@ -1,34 +1,37 @@
-<!-- <div class="sidebar" [class.collapsed]="isCollapsed">
-  <button class="toggle-btn" (click)="toggleSidebar()">
-    {{ isCollapsed ? '☰' : '✖' }}
-  </button>
-
-  <ul *ngIf="!isCollapsed">
-    <li (click)="navigateTo('/records')">Records</li>
-    <li (click)="navigateTo('/locations')">Locations</li>
-  </ul>
-</div> -->
 <div class="sidebar" [class.collapsed]="isCollapsed">
+
   <button class="toggle-btn" (click)="toggleSidebar()">
     {{ isCollapsed ? '☰' : '✖' }}
   </button>
 
-   <ul class="menu">
-    <li (click)="navigateTo('/records')">
-      <span class="icon">📄</span>
-      <span class="text">Records</span>
-    </li>
+  <ul class="menu">
 
-    <li (click)="navigateTo('/locations')">
-      <span class="icon">📍</span>
-      <span class="text">Locations</span>
-    </li>
+    <li *ngIf="loading">Loading menu...</li>
+    <li *ngIf="error" class="error">{{ error }}</li>
+
+    <ng-container *ngFor="let g of groupedMenus">
+
+      <li class="group-title" (click)="toggleGroup(g.idKey)">
+        <span>{{ expanded.has(g.idKey) ? '▼' : '►' }}</span>
+        <span *ngIf="!isCollapsed">{{ g.name }}</span>
+      </li>
+
+      <ng-container *ngIf="expanded.has(g.idKey)">
+        <li
+          *ngFor="let m of g.items"
+          class="menu-item"
+          (click)="onMenuClick(m)"
+        >
+          <span *ngIf="!isCollapsed">•</span>
+          <span class="text">
+            {{ m.menu_Name || m.Menu_Name || m.MenuName || m.Menu }}
+          </span>
+        </li>
+      </ng-container>
+
+    </ng-container>
+
   </ul>
 
-  
-     <button class="logout-btn" (click)="logout()" tooltip="Logout">
-    <span *ngIf="!isCollapsed" class="fas fa-power-off" ></span>
-     <span class="logout-text"></span>
-  </button>
+  <button class="logout-btn" (click)="logout()">Logout</button>
 </div>
-

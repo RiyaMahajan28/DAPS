@@ -56,51 +56,6 @@ recordForm: FormGroup;
   }
 
 
-
-//   onSave() {
-//     if (this.recordForm.valid) {
-//       if (this.isEdit) {
-//         const body = {
-//           ...this.recordForm.value,
-//           clientId: this.recordId,
-//           isEmpannelmentChange: 'N',
-//           companyId: this.companyId
-//         };
-
-//         this.api.updateClient(body).subscribe({
-//           next: () => {
-//             console.log('Client updated');
-//             this.router.navigate(['/records']);
-//           },
-//           error: err => console.error(err)
-//         });
-//       } else {
-//         const body = {
-//           ...this.recordForm.value,
-//           created_by: this.emp_id,
-//           companyId: this.companyId
-//         };
-
-//         this.api.addClient(body).subscribe({
-//           next: () => {
-//             console.log('Client added');
-//             this.router.navigate(['/records']);
-//           },
-//           error: err => console.error(err)
-//         });
-//       }
-//     }
-//   }
-// }
-
-//   ngOnInit(): void {
-//   // ✅ Check if editing
-//     // this.recordId = Number(this.route.snapshot.paramMap.get('id'));
-//     // if (this.recordId) {
-//     //   this.isEdit = true;
-//     //   this.loadRecord(this.recordId);
-//     // }
-//   }
 ngOnInit(): void {
   const state = history.state as { recordId?: number };
 
@@ -127,58 +82,14 @@ console.log(client)
 }
 
  
-// onSave(): void {
-//   if (!this.recordForm.valid) return;
 
-//   //const companyId = Number(localStorage.getItem('clientId')); //  number
-//   //const companyId=Number(localStorage.getItem('companyId'));
-//   const companyId = Number(this.recordForm.value.companyId); 
-//   if (this.isEdit) {  
-//     console.log(this.recordForm.value)
-//     const body = {
-//       ...this.recordForm.value,
-//       clientId: this.recordId,
-//       isEmpannelmentChange: "N",
- 
-//     };
-
-//     console.log('Update payload:', body);
-
-//     this.api.updateClient(body).subscribe({
-//       next: () => {
-//         console.log('Client updated');
-//         this.router.navigate(['/records']);
-//       },
-//       error: err => console.error('Update failed:', err)
-//     });
-
-//   } else {
-//      // ✅ Safely fetch emp_id
-//     const empId = localStorage.getItem('emp_id');
-//     const createdBy = empId ? Number(empId) : 0; // Default to 0 if null
-//     // const createdBy = Number(localStorage.getItem('emp_id')); //  number
-//     const body = {
-//       ...this.recordForm.value,
-//       created_by: createdBy,
-//       companyId: companyId
-//     };
-
-//     this.api.addClient(body).subscribe({
-//       next: () => {
-//         console.log('Client added');
-//         this.router.navigate(['/records']);
-//       },
-//       error: err => console.error('Add failed:', err)
-//     });
-//   }
-// }
 onSave(): void {
   if (!this.recordForm.valid) return;
 
   const companyId = Number(this.recordForm.value.companyId);
 
   // ✅ Safely read emp_id
-  let empId = localStorage.getItem('emp_id');
+  let empId = sessionStorage.getItem('emp_id');
   let createdBy = 0;
 
   // ✅ Ensure it's always a number
@@ -186,7 +97,7 @@ onSave(): void {
     createdBy = Number(empId);
   } else {
     createdBy = 1; // fallback to 1 if not present
-    console.warn('emp_id not found in localStorage. Using default created_by = 1');
+    console.warn('emp_id not found in sessionStorage. Using default created_by = 1');
   }
 
   if (this.isEdit) {

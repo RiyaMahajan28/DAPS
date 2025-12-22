@@ -1,0 +1,21 @@
+<!-- <header class="header">
+  <div class="header-left" (click)="goToDashboard()">
+    DASHBOARD
+  </div>
+
+  <div class="header-right" (click)="logout()">
+    <span class="logout-icon">⎋</span>
+  </div>
+</header> -->
+<header
+  class="header"
+  [class.sidebar-collapsed]="isSidebarCollapsed">
+
+  <div class="header-left" (click)="goToDashboard()">
+    DASHBOARD
+  </div>
+
+  <div class="header-right" (click)="logout()">
+    <span class="logout-icon">⎋</span>
+  </div>
+</header>

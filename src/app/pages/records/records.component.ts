@@ -54,7 +54,7 @@ export class RecordsComponent implements OnInit{
   }
   logout(): void {
   // Clear all local data
-  localStorage.clear();
+  sessionStorage.clear();
 
   // Prevent browser back navigation
   history.pushState(null,'',window.location.href);

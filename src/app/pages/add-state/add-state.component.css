@@ -89,7 +89,7 @@
 
 /* Buttons */
 .btn-primary {
-  width: auto;                    /* 🔄 changed */
+  width: auto;                  
   padding: 8px 24px;
   background: #2563eb;
   color: white;

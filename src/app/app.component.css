@@ -1,4 +1,5 @@
 .main-content {
+  margin-top: 60px;
   margin-left: 250px;
   padding: 20px;
   transition: margin-left 0.3s ease;
@@ -10,7 +11,10 @@
 
 /* When sidebar collapses */
 .main-content.collapsed {
-  margin-left: 60px;
+  margin-left:64px;
+}
+.header.sidebar-collapsed {
+  left: 64px;   /* collapsed sidebar width */
 }
 
 /* Mobile responsive */

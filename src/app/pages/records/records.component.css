@@ -1,35 +1,22 @@
 * {
-  padding: 2px;   /* 👈 All elements get 2px padding */
+  /* padding: 2px;    */
   margin: 0;
   box-sizing: border-box;
 }
-/* Navbar */
-.navbar {
-  position: sticky;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;  
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  /* background:rgb(210, 83, 9); */
-  /* background: #025a86; */
-  background: #003366;
-  padding: 2px;
-  color: white;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  border-radius: 6px;
-}
 
 .logo {
-  /* font-size: 20px;
-  font-weight: 600; */
-  margin: 5px;
- 
-  font: 400 2.812rem / 3.25rem Roboto, sans-serif;;
+    text-align: left;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #3c0c81;
 }
-
+.navbar-left{
+   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 16px; */
+}
 /* Navbar Right */
 .navbar-right {
   display: flex;
@@ -81,9 +68,9 @@
   background: #dc2626; /* darker red on hover */
 }
 
-.p-6{
+/* .p-6{
     margin-top: 20px;
-}
+} */
 
 table {
   border-collapse: collapse;
@@ -110,7 +97,7 @@ tr:hover {
 }
 
 .edit-btn {
-  background: #0ea5e9;  /* cyan-blue */
+  background: #3ba6ff;  /* cyan-blue */
   color: white;
   padding: 2px 8px;
   border: none;

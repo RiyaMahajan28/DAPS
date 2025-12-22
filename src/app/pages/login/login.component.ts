@@ -48,10 +48,10 @@ loginForm: FormGroup;
           console.log('Login success:', res);
 
           //  Example: save emp_id and companyId for later use
-           localStorage.setItem('emp_id', res.user.emP_ID);
-          // localStorage.setItem('companyId', res.companyId);
+           sessionStorage.setItem('emp_id', res.user.emP_ID);
+          // sessionStorage.setItem('companyId', res.companyId);
 
-          this.router.navigate(['/records']);
+          this.router.navigate(['/dashboard']);
         },
         error: (err: any) => {
           console.error('Login failed:', err);

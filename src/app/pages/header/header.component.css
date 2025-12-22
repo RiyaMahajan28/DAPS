@@ -1,0 +1,47 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 250px;
+  right: 0;
+  height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  z-index: 1000;
+    transition: left 0.3s ease;
+}
+/* When sidebar collapsed */
+.header.sidebar-collapsed {
+  left: 64px;
+}
+/* Left text */
+.header-left {
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Right icon */
+.header-right {
+  cursor: pointer;
+}
+
+.logout-icon {
+  font-size: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header {
+    padding: 0 12px;
+  }
+
+  .header-left {
+    font-size: 16px;
+  }
+}

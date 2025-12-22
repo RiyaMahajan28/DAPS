@@ -1,0 +1,49 @@
+/* SAME CSS YOU ALREADY HAVE — NO CHANGES */
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.logo {
+  text-align: left;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #3c0c81;
+}
+
+.navbar-left {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-right {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+
+th {
+  background-color: #f3f4f6;
+  font-weight: bold;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+}
+
+tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+tr:hover {
+  background-color: #f1f5f9;
+}

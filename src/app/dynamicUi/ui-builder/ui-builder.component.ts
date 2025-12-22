@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { DynamicFormService } from '../../services/dynamic-form.service';
+import { Router } from '@angular/router';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DynamicField } from '../../models/form-field.model';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -15,6 +16,13 @@ import { CommonModule } from '@angular/common';
 })
 
 export class UiBuilderComponent {
+  @Output() fieldDropped: EventEmitter<any> = new EventEmitter<any>();
+  @Input() set initialFields(v: DynamicField[] | undefined) {
+    if (Array.isArray(v)) {
+      // clone to avoid accidental mutation from parent
+      this.formFields = v.map(f => ({ ...f }));
+    }
+  }
 
   // Palette items (templates)
   components: DynamicField[];
@@ -32,7 +40,7 @@ export class UiBuilderComponent {
   // Generated form modal (shown after clicking Generate Form)
   showGeneratedModal = false;
 
-  constructor(private dfService: DynamicFormService) {
+  constructor(private dfService: DynamicFormService, private router: Router) {
     // Move components initialization to the constructor to ensure formFields is defined
     this.formFields = []; // Ensure formFields is initialized
     this.components = [
@@ -42,6 +50,20 @@ export class UiBuilderComponent {
       { type: 'textarea', label: 'Textarea', required: true, minLength: 10, maxLength: 100, controlName: this.generateControlName('Textarea') },
       { type: 'image', label: 'Image Upload', required: true, controlName: this.generateControlName('Image Upload') }
     ];
+  }
+
+  // navigate to editable forms list page
+  viewForms() {
+    try {
+      // navigate to the route that shows the editable form submissions
+      // ensure your routing has a path like '/editable-form' registered
+      const url = '/editable-form';
+      // navigate via injected Router (SPA navigation)
+      this.router.navigateByUrl(url).catch(() => { window.location.href = url; });
+    } catch (err) {
+      // safe fallback
+      window.location.href = '/editable-form';
+    }
   }
 
   // helper: generate camelCase safe control name from label
@@ -109,6 +131,19 @@ export class UiBuilderComponent {
 
     this.formFields.push(savedField);
 
+    // Emit a lightweight field definition so parent components can add it to their reactive forms
+    try {
+      const fieldDef: any = {
+        key: savedField.controlName,
+        label: savedField.label,
+        type: savedField.type, // 'textbox' | 'dropdown' | 'radio' | 'textarea' | 'image'
+        validators: savedField.required ? ['required'] : [],
+        options: savedField.options ? [...savedField.options] : undefined
+      };
+      this.fieldDropped.emit(fieldDef);
+    } catch (err) {
+      console.warn('Failed to emit fieldDropped', err);
+    }
     // close config modal
     this.configField = null;
     this.showConfigModal = false;
@@ -136,7 +171,25 @@ export class UiBuilderComponent {
     if (!this.dynamicForm) return;
     if (this.dynamicForm.valid) {
       console.log('Form Output:', this.dynamicForm.value);
-      alert('Form submitted successfully (check console).');
+
+      // Persist the submission so EditableForm can list it
+      try {
+        const storageKey = 'editableForm_submissions';
+        const raw = sessionStorage.getItem(storageKey);
+        const existing = raw ? JSON.parse(raw) : [];
+        const payload = {
+          schema: this.formFields || [],
+          values: this.dynamicForm.value || {},
+          createdAt: Date.now()
+        };
+        existing.push(payload);
+        sessionStorage.setItem(storageKey, JSON.stringify(existing));
+        alert('Form submitted and saved. It will appear in Editable Forms.');
+      } catch (err) {
+        console.error('Failed to save submission', err);
+        alert('Form submitted but failed to save locally (check console).');
+      }
+
       this.closeGeneratedModal();
     } else {
       // show errors

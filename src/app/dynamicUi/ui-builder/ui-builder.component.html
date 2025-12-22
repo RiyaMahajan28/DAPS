@@ -1,5 +1,7 @@
 <div class="builder-container">
 
+  
+
   <!-- LEFT SIDE MENU -->
   <div
     class="palette"
@@ -16,7 +18,9 @@
       {{ comp.label }}
     </div>
 
-    <button type="button" (click)="generateForm()" class="gen-btn">Generate Form</button>
+    <button type="button" (click)="generateForm()" class="gen-btn">Generate Form</button> <br>
+    <button type="button" class="gen-btn" (click)="viewForms()">View Forms</button>
+
   </div>
 
   <!-- RIGHT SIDE CANVAS (Dropped Fields View) -->

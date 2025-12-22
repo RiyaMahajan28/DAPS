@@ -1,0 +1,47 @@
+<div class="form-container">
+  <div class="form-card">
+
+    <h2 class="form-title">Add State</h2>
+
+    <form [formGroup]="stateForm" (ngSubmit)="onSave()">
+
+      <!-- Client ID -->
+      <div class="form-group">
+        <label>Client ID</label>
+        <input type="number" formControlName="clientId" placeholder="Enter Client ID" />
+        <p class="error" *ngIf="stateForm.get('clientId')?.invalid && stateForm.get('clientId')?.touched">
+          Client ID is required
+        </p>
+      </div>
+
+      <!-- State Name -->
+      <div class="form-group">
+        <label>State Name</label>
+        <input type="text" formControlName="zoneName" placeholder="Enter State Name" />
+        <p class="error" *ngIf="stateForm.get('zoneName')?.invalid && stateForm.get('zoneName')?.touched">
+          State Name is required
+        </p>
+      </div>
+
+      <!-- Short Code -->
+      <div class="form-group">
+        <label>Short Code</label>
+        <input type="text" formControlName="zoneshortCode" placeholder="Enter Short Code" />
+        <p class="error" *ngIf="stateForm.get('zoneshortCode')?.invalid && stateForm.get('zoneshortCode')?.touched">
+          Short Code is required
+        </p>
+      </div>
+
+      <!-- Status -->
+      <div class="form-group">
+        <label>Status</label>
+        <input type="text" formControlName="zonestatus" />
+      </div>
+
+      <!-- Buttons -->
+      <button type="submit" class="btn-primary">Save</button>
+      <button type="button" class="btn-primary" (click)="goBack()">Back</button>
+
+    </form>
+  </div>
+</div>
