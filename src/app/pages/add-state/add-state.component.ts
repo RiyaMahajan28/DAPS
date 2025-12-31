@@ -28,7 +28,7 @@ ngOnInit(): void {
   this.stateForm = this.fb.group({
     clientId: ['', Validators.required],
     zoneName: ['', Validators.required],
-    zoneshortCode: ['', Validators.required],
+    zoneshortCode: ['',[Validators.required, Validators.maxLength(2),Validators.minLength(2)]],
     zonestatus: [''],
     email: ['', [Validators.email]]
   });

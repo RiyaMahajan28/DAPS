@@ -44,10 +44,14 @@
       <!-- Short Code -->
       <div class="form-group">
         <label>Short Code</label>
-        <input type="text" formControlName="zoneshortCode" placeholder="Enter Short Code" />
+        <input type="text" formControlName="zoneshortCode" maxlength="2" placeholder="Enter Short Code" />
         <p class="error" *ngIf="stateForm.get('zoneshortCode')?.invalid && stateForm.get('zoneshortCode')?.touched">
           Short Code is required
         </p>
+         <span class="error" *ngIf="stateForm.get('zoneshortCode')?.errors?.['minlength'] 
+               || stateForm.get('zoneshortCode')?.errors?.['maxlength']">
+               Short Code must be exactly 2 characters
+         </span>
       </div>
 
       <!-- Status -->
