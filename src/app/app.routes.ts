@@ -11,6 +11,7 @@ import { UiBuilderComponent } from './dynamicUi/ui-builder/ui-builder.component'
 import { EditableFormComponent } from './dynamicUi/editable-form/editable-form.component';
 import { StateListComponent } from './pages/state-list/state-list.component';
 import { AddStateComponent } from './pages/add-state/add-state.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -18,13 +19,14 @@ export const routes: Routes = [
   { path: 'record-form', component: RecordFormComponent,canActivate:[authGuard] }, // add new
   // { path: 'record-form/:id', component: RecordFormComponent,canActivate:[authGuard] } // edit
   {path : 'record-form' , component: RecordFormComponent, canActivate: [authGuard],},
-{ path: 'locations', component: LocationComponent },
-{path:'dynamic-ui',component:DynamicUiComponent},
-{path:'menu',component:MenuContainerComponent},
-{path:'drag-n-drop',component:UiBuilderComponent},
-{path:'editable-form',component:EditableFormComponent},
-{ path: 'dashboard', loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent) },
-{ path: 'state-list',component:StateListComponent},
-{ path: 'add-state',component:AddStateComponent}
+{ path: 'locations', component: LocationComponent,canActivate: [authGuard] },
+{path:'dynamic-ui',component:DynamicUiComponent,canActivate: [authGuard]},
+{path:'menu',component:MenuContainerComponent,canActivate: [authGuard],},
+{path:'drag-n-drop',component:UiBuilderComponent,canActivate: [authGuard]},
+{path:'editable-form',component:EditableFormComponent,canActivate: [authGuard]},
+{ path: 'dashboard', component: DashboardComponent,canActivate: [authGuard] },
+{ path: 'state-list',component:StateListComponent,canActivate: [authGuard],},
+{ path: 'add-state',component:AddStateComponent,canActivate: [authGuard]},
+{  path: 'add-state/:id',component: AddStateComponent,canActivate: [authGuard]}
 
 ];

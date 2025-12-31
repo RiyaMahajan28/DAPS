@@ -131,11 +131,7 @@ import { environment } from '../environments/environment';
 export class ApiService {
 
   private baseUrl = environment.baseUrl;
-
-  private headers = new HttpHeaders({
-    'NorthEyeApiKey': environment.apiKey,
-    'Content-Type': 'application/json'
-  });
+  private headers = new HttpHeaders(environment.headers);
 
   constructor(private http: HttpClient) {}
 
@@ -240,6 +236,15 @@ getClientZone(): Observable<any> {
     { headers: this.headers }
   );
 }
+// UPDATE CLIENT ZONE (STATE)
+updateClientZone(body: any): Observable<any> {
+  return this.http.post(
+    `${this.baseUrl}${environment.endpoints.updateClientZone}`,
+    body,
+    { headers: this.headers }
+  );
+}
+
 
   // GET LOCATION BY CITY
   getLocationByCity(cityId: number): Observable<any[]> {

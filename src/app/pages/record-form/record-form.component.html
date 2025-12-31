@@ -64,7 +64,9 @@
       <button type="submit" class="btn-primary">
         {{ isEdit ? 'Update' : 'Save' }}
       </button>
-      <button type="button" class="btn-primary" (click)="goBack()">Back</button>
+      <button *ngIf="isEdit" type="button" class="btn-primary" (click)="goBack()">
+        Back
+      </button>
     </form>
   </div>
 </div>

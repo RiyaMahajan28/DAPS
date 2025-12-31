@@ -5,6 +5,11 @@ export const environment = {
 
   apiKey: '1',
 
+    headers: {
+    'NorthEyeApiKey': '1',
+    'Content-Type': 'application/json'
+  },
+
   endpoints: {
     login: 'Client/Login',
     getClient: 'Client/getClient',
@@ -24,7 +29,7 @@ export const environment = {
 
     getClientZone: 'Client/getClientZone',
     insertClientZone: 'Client/insertClientZone',
-    
+    updateClientZone: 'Client/updateClientZone',
 
     getMenu: 'Client/getMenu',
     getChartClient: 'Client/getChartClient',

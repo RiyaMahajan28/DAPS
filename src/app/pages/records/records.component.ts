@@ -41,10 +41,6 @@ export class RecordsComponent implements OnInit{
 }
 
 
-  // editRecord(id: number) {
-  //   this.router.navigate(['/record-form', id]);
-  // }
-
   editRecord(id: number){
     this.router.navigate(['/record-form'],{state:{recordId :id}})
   }

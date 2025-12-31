@@ -1,18 +1,36 @@
 <div class="form-container">
   <div class="form-card">
 
-    <h2 class="form-title">Add State</h2>
+    <h2 class="form-title">
+  {{ isEdit ? 'Edit State' : 'Add State' }}
+</h2>
+
 
     <form [formGroup]="stateForm" (ngSubmit)="onSave()">
 
       <!-- Client ID -->
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label>Client ID</label>
         <input type="number" formControlName="clientId" placeholder="Enter Client ID" />
         <p class="error" *ngIf="stateForm.get('clientId')?.invalid && stateForm.get('clientId')?.touched">
           Client ID is required
         </p>
-      </div>
+      </div> -->
+      <!-- Client Name -->
+<div class="form-group">
+  <label>Client Name</label>
+  <select formControlName="clientId">
+    <option value="">Select Client</option>
+    <option *ngFor="let client of clients" [value]="client.clientId">
+      {{ client.clientName }}
+    </option>
+  </select>
+
+  <p class="error"
+     *ngIf="stateForm.get('clientId')?.invalid && stateForm.get('clientId')?.touched">
+    Client is required
+  </p>
+</div>
 
       <!-- State Name -->
       <div class="form-group">
@@ -35,7 +53,13 @@
       <!-- Status -->
       <div class="form-group">
         <label>Status</label>
-        <input type="text" formControlName="zonestatus" />
+        <input type="text" formControlName="zonestatus" placeholder="Select Status" />
+      </div>
+
+        <!-- Email -->
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" formControlName="email" placeholder="Enter Email" />
       </div>
 
       <!-- Buttons -->

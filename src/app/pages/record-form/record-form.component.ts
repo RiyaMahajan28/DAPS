@@ -70,16 +70,24 @@ ngOnInit(): void {
 
 
   // ✅ Load record by ID
-  private loadRecord(id: number): void {
+private loadRecord(id: number): void {
   this.api.getClients().subscribe((res: any) => {
-    const records = res?.data || [];   //  take array part
+    const records = res?.data || [];
     const client = records.find((c: any) => c.clientId === id);
-console.log(client)
+
     if (client) {
-      this.recordForm.patchValue(client);
+      const cleanName = client.clientName
+        ?.split('-')[0]  
+        ?.trim();
+
+      this.recordForm.patchValue({
+        ...client,
+        clientName: cleanName
+      });
     }
   });
 }
+
 
  
 
@@ -88,11 +96,11 @@ onSave(): void {
 
   const companyId = Number(this.recordForm.value.companyId);
 
-  // ✅ Safely read emp_id
+  //  read emp_id
   let empId = sessionStorage.getItem('emp_id');
   let createdBy = 0;
 
-  // ✅ Ensure it's always a number
+  // Created By logic
   if (empId && !isNaN(Number(empId))) {
     createdBy = Number(empId);
   } else {
@@ -100,27 +108,23 @@ onSave(): void {
     console.warn('emp_id not found in sessionStorage. Using default created_by = 1');
   }
 
-  if (this.isEdit) {
+ if (this.isEdit) {
+  const body = {
+    ...this.recordForm.value,
+    clientId: this.recordId,
+    isEmpannelmentChange: 'N',
+    created_by: createdBy
+  };
+
+  this.api.updateClient(body).subscribe({
+    next: () => this.router.navigate(['/records']),
+    error: err => console.error('Update failed:', err)
+  });
+}
+else {
     const body = {
       ...this.recordForm.value,
-      clientId: this.recordId,
-      isEmpannelmentChange: 'N',
-      created_by: createdBy  // ✅ make sure it's sent here too
-    };
-
-
-    this.api.updateClient(body).subscribe({
-      next: () => {
-        console.log('Client updated');
-        this.router.navigate(['/records']);
-      },
-      error: err => console.error('Update failed:', err)
-    });
-
-  } else {
-    const body = {
-      ...this.recordForm.value,
-      created_by: createdBy,   // ✅ ensure numeric value
+      created_by: createdBy,   
       companyId: companyId
     };
 
@@ -137,7 +141,7 @@ onSave(): void {
 
 goBack(){
   this.router.navigate(['/records'])
-}
+}//remove
 
 
 

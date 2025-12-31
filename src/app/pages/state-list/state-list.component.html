@@ -4,7 +4,6 @@
   </div>
 
   <div class="navbar-right">
-    <!-- Future: Add search / add state button -->
   </div>
 </div>
 
@@ -17,6 +16,8 @@
           <th class="border px-4 py-2 text-left">Short Code</th>
           <th class="border px-4 py-2 text-left">Status</th>
           <th class="border px-4 py-2 text-left">Client</th>
+          <th class="border px-4 py-2 text-left">Action</th>
+
         </tr>
       </thead>
 
@@ -45,6 +46,14 @@
           <td class="border px-4 py-2">
             {{ s.clientName }}
           </td>
+          <td class="border px-4 py-2">
+  <button
+    class="px-3 py-1 bg-blue-500 text-white rounded text-sm edit-btn"
+    (click)="editState(s)">
+    Edit
+  </button>
+</td>
+
         </tr>
       </tbody>
     </table>
