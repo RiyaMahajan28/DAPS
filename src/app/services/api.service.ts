@@ -114,15 +114,9 @@
 //   return this.http.post(
 //     `${this.baseUrl}Client/insertClientZone`,
 //     body,
-//     { headers: this.headers }
-//   );
-// }
-
-
-// }
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -133,7 +127,22 @@ export class ApiService {
   private baseUrl = environment.baseUrl;
   private headers = new HttpHeaders(environment.headers);
 
+  private selectedClientSubject = new BehaviorSubject<any | null>(null);
+  selectedClient$ = this.selectedClientSubject.asObservable();
+
   constructor(private http: HttpClient) {}
+
+  setSelectedClient(client: any): void {
+    this.selectedClientSubject.next(client);
+  }
+
+  getSelectedClientSnapshot(): any | null {
+    return this.selectedClientSubject.value;
+  }
+
+  clearSelectedClient(): void {
+    this.selectedClientSubject.next(null);
+  }
 
   // LOGIN
   login(data: { emp_code: string; emp_password: string }): Observable<any> {
@@ -143,23 +152,24 @@ export class ApiService {
       { headers: this.headers }
     );
   }
-  // POST: get chart data for clients
-getChartClient(body: any): Observable<any> {
-  return this.http.post(
-    `${this.baseUrl}${environment.endpoints.getChartClient}`,
-    body,
-    { headers: this.headers }
-  );
-}
 
- // GET MENU for sidebar
-getMenu(body: any): Observable<any> {
-  return this.http.post(
-    `${this.baseUrl}${environment.endpoints.getMenu}`,
-    body,
-    { headers: this.headers }
-  );
-}
+  // POST: get chart data for clients
+  getChartClient(body: any): Observable<any> {
+    return this.http.post(
+      `${this.baseUrl}${environment.endpoints.getChartClient}`,
+      body,
+      { headers: this.headers }
+    );
+  }
+
+  // GET MENU for sidebar
+  getMenu(body: any): Observable<any> {
+    return this.http.post(
+      `${this.baseUrl}${environment.endpoints.getMenu}`,
+      body,
+      { headers: this.headers }
+    );
+  }
 
   // GET CLIENTS
   getClients(): Observable<any[]> {

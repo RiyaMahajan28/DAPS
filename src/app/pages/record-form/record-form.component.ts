@@ -62,7 +62,13 @@ ngOnInit(): void {
   if (state?.recordId) {
     this.isEdit = true;
     this.recordId = state.recordId;
-    this.loadRecord(this.recordId);
+    const selected = this.api.getSelectedClientSnapshot();
+    if (selected && selected.clientId === this.recordId) {
+      this.patchFormFromClient(selected);
+      this.api.clearSelectedClient();
+    } else {
+      this.loadRecord(this.recordId);
+    }
   } else {
     console.log('No recordId found — form is in add mode');
   }
@@ -76,15 +82,19 @@ private loadRecord(id: number): void {
     const client = records.find((c: any) => c.clientId === id);
 
     if (client) {
-      const cleanName = client.clientName
-        ?.split('-')[0]  
-        ?.trim();
-
-      this.recordForm.patchValue({
-        ...client,
-        clientName: cleanName
-      });
+      this.patchFormFromClient(client);
     }
+  });
+}
+
+private patchFormFromClient(client: any): void {
+  const cleanName = client.clientName
+    ?.split('-')[0]
+    ?.trim();
+
+  this.recordForm.patchValue({
+    ...client,
+    clientName: cleanName
   });
 }
 

@@ -41,11 +41,13 @@ export class RecordsComponent implements OnInit{
 }
 
 
-  editRecord(id: number){
-    this.router.navigate(['/record-form'],{state:{recordId :id}})
+  editRecord(client: any){
+    this.api.setSelectedClient(client);
+    this.router.navigate(['/record-form'], { state: { recordId: client?.clientId } });
   }
  
   addRecord() {
+    this.api.clearSelectedClient();
     this.router.navigate(['/record-form']);
   }
   logout(): void {
