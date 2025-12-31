@@ -39,21 +39,19 @@
       </div>
 
       <!-- Status -->
-      <!-- <div class="form-group">
-        <label>Status</label>
-        <select formControlName="status">
-          <option value="">-- Select Status --</option>
-          <option value="Active">Yes</option>
-          <option value="Inactive">No</option>
-        </select>
-        <p class="error" *ngIf="recordForm.get('status')?.invalid && recordForm.get('status')?.touched">
-          Status is required
-        </p>
-      </div> -->
 <div class="form-group">
-        <label>Status</label>
-        <input type="text" formControlName="status" placeholder="Enter status" />
-      </div>
+  <label>Status</label>
+  <select formControlName="status">
+    <option value="">-- Select Status --</option>
+    <option value="Y">Active</option>
+    <option value="N">Inactive</option>
+  </select>
+
+  <p class="error"
+     *ngIf="recordForm.get('status')?.invalid && recordForm.get('status')?.touched">
+    Status is required
+  </p>
+</div>
       <!-- Empannelment -->
       <div class="form-group">
         <label>Empannelment</label>
