@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 import { ApiService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -31,12 +32,12 @@ ngOnInit(): void {
     email: ['', [Validators.email]]
   });
 
-this.api.getClients().subscribe({
+  this.api.getClients().subscribe({
   next: (res: any) => {
     this.clients = res?.data || [];
   },
   error: () => {
-    alert('Failed to load clients');
+    Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to load clients' });
   }
 });
 
@@ -66,10 +67,10 @@ loadStateById(id: number) {
           zonestatus: state.zonestatus
         });
       } else {
-        alert('State not found');
+        Swal.fire({ icon: 'error', title: 'Not found', text: 'State not found' });
       }
     },
-    error: () => alert('Failed to load state')
+  error: () => Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to load state' })
   });
 }
 
@@ -128,12 +129,12 @@ onSave() {
 
     this.api.updateClientZone(payload).subscribe({
       next: () => {
-        alert('State updated successfully');
+        Swal.fire({ icon: 'success', title: 'Updated', text: 'State updated successfully' });
         this.router.navigate(['/state-list']);
       },
       error: (err) => {
         console.error(err);
-        alert('Failed to update state');
+        Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to update state' });
       }
     });
 
@@ -150,12 +151,12 @@ onSave() {
 
     this.api.insertClientZone(payload).subscribe({
       next: () => {
-        alert('State added successfully');
+        Swal.fire({ icon: 'success', title: 'Saved', text: 'State added successfully' });
         this.router.navigate(['/state-list']);
       },
       error: (err) => {
         console.error(err);
-        alert('Failed to add state');
+        Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to add state' });
       }
     });
   }

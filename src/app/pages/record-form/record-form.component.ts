@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import Swal from 'sweetalert2';
 import { RecordsComponent } from "../records/records.component";
 
 
@@ -110,7 +111,7 @@ onSave(): void {
     console.warn('emp_id not found in sessionStorage. Using default created_by = 1');
   }
 
- if (this.isEdit) {
+  if (this.isEdit) {
   const body = {
     ...this.recordForm.value,
     clientId: this.recordId,
@@ -119,8 +120,15 @@ onSave(): void {
   };
 
   this.api.updateClient(body).subscribe({
-    next: () => this.router.navigate(['/records']),
-    error: err => console.error('Update failed:', err)
+    next: () => {
+      Swal.fire({ icon: 'success', title: 'Updated', text: 'Client updated successfully' }).then(() => {
+        this.router.navigate(['/records']);
+      });
+    },
+    error: err => {
+      console.error('Update failed:', err);
+      Swal.fire({ icon: 'error', title: 'Update failed', text: err?.message || 'Failed to update client' });
+    }
   });
 }
 else {
@@ -133,10 +141,14 @@ else {
 
     this.api.addClient(body).subscribe({
       next: () => {
-        console.log('Client added');
-        this.router.navigate(['/records']);
+        Swal.fire({ icon: 'success', title: 'Saved', text: 'Client added successfully' }).then(() => {
+          this.router.navigate(['/records']);
+        });
       },
-      error: err => console.error('Add failed:', err)
+      error: err => {
+        console.error('Add failed:', err);
+        Swal.fire({ icon: 'error', title: 'Add failed', text: err?.message || 'Failed to add client' });
+      }
     });
   }
 }

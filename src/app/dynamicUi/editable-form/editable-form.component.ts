@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { DynamicFormService } from '../../services/dynamic-form.service';
@@ -173,10 +174,10 @@ export class EditableFormComponent implements OnInit {
       }
       sessionStorage.setItem(this.storageKey, JSON.stringify(this.submissions));
       this.editMode = false;
-      alert('Form saved locally');
+      Swal.fire({ icon: 'success', title: 'Saved', text: 'Form saved locally' });
     } catch (err) {
       console.error('Failed to save form', err);
-      alert('Save failed — check console');
+      Swal.fire({ icon: 'error', title: 'Save failed', text: 'Save failed — check console' });
     }
   }
 }

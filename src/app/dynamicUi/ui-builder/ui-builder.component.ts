@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
+import Swal from 'sweetalert2';
 import { DynamicFormService } from '../../services/dynamic-form.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -113,7 +114,7 @@ export class UiBuilderComponent {
     // label validation
     const label = (this.configField.label || '').trim();
     if (!label) {
-      alert('Label is required');
+      Swal.fire({ icon: 'warning', title: 'Validation', text: 'Label is required' });
       return;
     }
 
@@ -182,10 +183,10 @@ export class UiBuilderComponent {
         };
         existing.push(payload);
         sessionStorage.setItem(storageKey, JSON.stringify(existing));
-        alert('Form submitted and saved. It will appear in Editable Forms.');
+  Swal.fire({ icon: 'success', title: 'Saved', text: 'Form submitted and saved. It will appear in Editable Forms.' });
       } catch (err) {
         console.error('Failed to save submission', err);
-        alert('Form submitted but failed to save locally (check console).');
+  Swal.fire({ icon: 'error', title: 'Save failed', text: 'Form submitted but failed to save locally (check console).' });
       }
 
       this.closeGeneratedModal();

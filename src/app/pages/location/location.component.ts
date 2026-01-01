@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import Swal from 'sweetalert2';
 import { ApiService } from '../../services/api.service';
 import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -224,7 +225,7 @@ export class LocationComponent implements OnInit {
 
   addLocation() {
     if (!this.addStateId || !this.addCityId || !this.addLocationName.trim()) {
-      alert('Please provide state, city and location name');
+      Swal.fire({ icon: 'warning', title: 'Validation', text: 'Please provide state, city and location name' });
       return;
     }
 
@@ -246,7 +247,7 @@ export class LocationComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error adding location:', err);
-        alert('Failed to add location');
+        Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to add location' });
       },
     });
   }
