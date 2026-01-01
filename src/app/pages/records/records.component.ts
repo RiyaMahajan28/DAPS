@@ -9,14 +9,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-records',
-  standalone: true,
-  imports: [ 
-    CommonModule,
-    MatTableModule,
-    MatButtonModule,
-    FormsModule,
-    ReactiveFormsModule
-    ],
   templateUrl: './records.component.html',
   styleUrl: './records.component.css'
 })
@@ -43,12 +35,13 @@ export class RecordsComponent implements OnInit{
 
   editRecord(client: any){
     this.api.setSelectedClient(client);
-    this.router.navigate(['/record-form'], { state: { recordId: client?.clientId } });
+    // record-form is a child route of /records
+    this.router.navigate(['/records', 'record-form'], { state: { recordId: client?.clientId } });
   }
  
   addRecord() {
     this.api.clearSelectedClient();
-    this.router.navigate(['/record-form']);
+    this.router.navigate(['/records', 'record-form']);
   }
   logout(): void {
   // Clear all local data

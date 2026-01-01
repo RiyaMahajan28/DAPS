@@ -6,8 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-state',
-  standalone: true,
-  imports: [CommonModule,FormsModule,ReactiveFormsModule],
   templateUrl: './add-state.component.html',
   styleUrl: './add-state.component.css'
 })

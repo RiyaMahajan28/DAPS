@@ -127,8 +127,6 @@ import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-sidebar',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
@@ -224,7 +222,8 @@ export class SidebarComponent implements OnInit {
         .toLowerCase();
 
     if (name.includes('add client')) {
-      this.router.navigate(['/record-form']);
+      // record form is a child route of /records
+      this.router.navigate(['/records', 'record-form']);
     }
     else if (name.includes('view client')) {
       this.router.navigate(['/records']);
@@ -233,7 +232,8 @@ export class SidebarComponent implements OnInit {
     this.router.navigate(['/state-list']);
   }
   else if (name.includes('add state')) {
-    this.router.navigate(['/add-state']);
+    // add state lives under /state-list/add
+    this.router.navigate(['/state-list', 'add']);
   }
   }
 

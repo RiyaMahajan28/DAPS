@@ -7,13 +7,6 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-location',
-  standalone: true,
-  imports: [ReactiveFormsModule,
-            CommonModule,
-            FormsModule,
-            NgSelectModule,
-            
-  ],
   templateUrl: './location.component.html',
   styleUrl: './location.component.css',
   encapsulation: ViewEncapsulation.None,

@@ -13,14 +13,6 @@ import { RecordsComponent } from "../records/records.component";
 
 @Component({
   selector: 'app-record-form',
-  standalone: true,
-  imports: [CommonModule,
-    ReactiveFormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule],
   templateUrl: './record-form.component.html',
   styleUrl: './record-form.component.css'
 })

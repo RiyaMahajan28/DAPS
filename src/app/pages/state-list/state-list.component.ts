@@ -5,8 +5,6 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-state-list',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './state-list.component.html',
   styleUrl: './state-list.component.css'
 })
@@ -33,6 +31,7 @@ export class StateListComponent implements OnInit {
     });
   }
   editState(state: any) {
-  this.router.navigate(['/add-state', state.zoneId]);
+  // add-state is now nested under /state-list/add/:id
+  this.router.navigate(['/state-list', 'add', state.zoneId]);
 }
 }

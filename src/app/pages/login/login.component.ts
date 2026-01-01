@@ -11,14 +11,6 @@ import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [CommonModule,
-    ReactiveFormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule
-  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

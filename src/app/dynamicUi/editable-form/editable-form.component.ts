@@ -7,8 +7,6 @@ import { UiBuilderComponent } from '../ui-builder/ui-builder.component';
 
 @Component({
   selector: 'app-editable-form',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, UiBuilderComponent],
   templateUrl: './editable-form.component.html',
   styleUrls: ['./editable-form.component.css']
 })

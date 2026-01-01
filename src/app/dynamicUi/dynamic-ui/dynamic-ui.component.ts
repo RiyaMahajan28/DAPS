@@ -4,8 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dynamic-ui',
-  standalone: true,
-  imports: [CommonModule,FormsModule],
   templateUrl: './dynamic-ui.component.html',
   styleUrl: './dynamic-ui.component.css'
 })

@@ -6,8 +6,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-menu-container',
-  standalone: true,
-  imports: [CommonModule, HomeComponent,ProfileComponent,SettingsComponent],
   templateUrl: './menu-container.component.html',
   styleUrl: './menu-container.component.css'
 })

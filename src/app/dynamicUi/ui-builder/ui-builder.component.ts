@@ -9,8 +9,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-ui-builder',
-  standalone: true,
-  imports: [DragDropModule,CommonModule,ReactiveFormsModule,FormsModule],
   templateUrl: './ui-builder.component.html',
   styleUrl: './ui-builder.component.css'
 })
