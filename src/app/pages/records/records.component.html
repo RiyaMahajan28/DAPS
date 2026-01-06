@@ -3,19 +3,7 @@
   <div class="navbar-left">
     <h1 class="logo">Client Records</h1>
   </div>
-
-  <div class="navbar-right">
-    <!-- Add Client Button -->
-    <!-- <button class="add-btn" (click)="addRecord()">
-      + Add Client
-    </button> -->
-     <!-- ✅ Logout button beside Save -->
-  <!-- <button class="logout-btn"  (click)="logout()">
-    Logout
-  </button> -->
   </div>
-  
-</div>
 <div class="p-6">
   <div class="overflow-x-auto">
     <table class="min-w-full border border-gray-300 rounded-lg shadow-sm">
@@ -67,4 +55,5 @@
   <p *ngIf="records.length === 0" class="mt-4 text-gray-500">
     No clients found.
   </p>
+<router-outlet></router-outlet>
 </div>

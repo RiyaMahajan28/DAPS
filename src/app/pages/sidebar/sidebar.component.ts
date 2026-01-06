@@ -223,7 +223,7 @@ export class SidebarComponent implements OnInit {
 
     if (name.includes('add client')) {
       // record form is a child route of /records
-      this.router.navigate(['/records', 'record-form']);
+      this.router.navigate([ 'record-form']);
     }
     else if (name.includes('view client')) {
       this.router.navigate(['/records']);
@@ -233,7 +233,7 @@ export class SidebarComponent implements OnInit {
   }
   else if (name.includes('add state')) {
     // add state lives under /state-list/add
-    this.router.navigate(['/state-list', 'add']);
+    this.router.navigate([ 'add-state']);
   }
   }
 

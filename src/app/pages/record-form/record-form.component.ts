@@ -122,7 +122,7 @@ onSave(): void {
   this.api.updateClient(body).subscribe({
     next: () => {
       Swal.fire({ icon: 'success', title: 'Updated', text: 'Client updated successfully' }).then(() => {
-        this.router.navigate(['/records']);
+    this.router.navigate(['/records'], { relativeTo: this.route });
       });
     },
     error: err => {
@@ -142,7 +142,7 @@ else {
     this.api.addClient(body).subscribe({
       next: () => {
         Swal.fire({ icon: 'success', title: 'Saved', text: 'Client added successfully' }).then(() => {
-          this.router.navigate(['/records']);
+          this.router.navigate(['/records'], { relativeTo: this.route });
         });
       },
       error: err => {
@@ -154,7 +154,7 @@ else {
 }
 
 goBack(){
-  this.router.navigate(['/records'])
+  this.router.navigate(['/records'], { relativeTo: this.route })
 }//remove
 
 

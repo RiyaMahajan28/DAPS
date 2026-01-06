@@ -14,19 +14,17 @@ import { AddStateComponent } from './pages/add-state/add-state.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'records', component: RecordsComponent , canActivate:[authGuard]},
-  { path: 'record-form', component: RecordFormComponent,canActivate:[authGuard] }, // add new
-  // { path: 'record-form/:id', component: RecordFormComponent,canActivate:[authGuard] } // edit
-  {path : 'record-form' , component: RecordFormComponent, canActivate: [authGuard],},
-{ path: 'locations', component: LocationComponent,canActivate: [authGuard] },
-{path:'dynamic-ui',component:DynamicUiComponent,canActivate: [authGuard]},
-{path:'menu',component:MenuContainerComponent,canActivate: [authGuard],},
-{path:'drag-n-drop',component:UiBuilderComponent,canActivate: [authGuard]},
-{path:'editable-form',component:EditableFormComponent,canActivate: [authGuard]},
-{ path: 'dashboard', component: DashboardComponent,canActivate: [authGuard] },
-{ path: 'state-list',component:StateListComponent,canActivate: [authGuard],},
-{ path: 'add-state',component:AddStateComponent,canActivate: [authGuard]},
-{  path: 'add-state/:id',component: AddStateComponent,canActivate: [authGuard]}
+//   { path: 'login', component: LoginComponent },
+//   { path: 'records', component: RecordsComponent , canActivate:[authGuard]},
+//   { path: 'record-form', component: RecordFormComponent,canActivate:[authGuard] }, // add new
+// { path: 'locations', component: LocationComponent,canActivate: [authGuard] },
+// {path:'dynamic-ui',component:DynamicUiComponent,canActivate: [authGuard]},
+// {path:'menu',component:MenuContainerComponent,canActivate: [authGuard],},
+// {path:'drag-n-drop',component:UiBuilderComponent,canActivate: [authGuard]},
+// {path:'editable-form',component:EditableFormComponent,canActivate: [authGuard]},
+// { path: 'dashboard', component: DashboardComponent,canActivate: [authGuard] },
+// { path: 'state-list',component:StateListComponent,canActivate: [authGuard],},
+// { path: 'add-state',component:AddStateComponent,canActivate: [authGuard]},
+// {  path: 'add-state/:id',component: AddStateComponent,canActivate: [authGuard]}
 
 ];

@@ -74,39 +74,6 @@ loadStateById(id: number) {
   });
 }
 
-
-//   onSave() {
-//   if (this.stateForm.invalid) {
-//     this.stateForm.markAllAsTouched();
-//     return;
-//   }
-
-//   const payload = {
-//     ...this.stateForm.value,
-//     zonecreated_by: Number(sessionStorage.getItem('emp_id')) || 1,
-//     rsemail: 1,
-//     zoneId: this.stateId
-//   };
-
-//   if (this.isEdit) {
-//     this.api.updateClientZone(payload).subscribe({
-//       next: () => {
-//         alert('State updated successfully');
-//         this.router.navigate(['/state-list']);
-//       },
-//       error: () => alert('Failed to update state')
-//     });
-//   } else {
-//     this.api.insertClientZone(payload).subscribe({
-//       next: () => {
-//         alert('State added successfully');
-//         this.router.navigate(['/state-list']);
-//       },
-//       error: () => alert('Failed to add state')
-//     });
-//   }
-// }
-
 onSave() {
   if (this.stateForm.invalid) {
     this.stateForm.markAllAsTouched();
@@ -130,7 +97,7 @@ onSave() {
     this.api.updateClientZone(payload).subscribe({
       next: () => {
         Swal.fire({ icon: 'success', title: 'Updated', text: 'State updated successfully' });
-        this.router.navigate(['/state-list']);
+  this.router.navigate(['/state-list'], { relativeTo: this.route });
       },
       error: (err) => {
         console.error(err);
@@ -152,7 +119,7 @@ onSave() {
     this.api.insertClientZone(payload).subscribe({
       next: () => {
         Swal.fire({ icon: 'success', title: 'Saved', text: 'State added successfully' });
-        this.router.navigate(['/state-list']);
+  this.router.navigate(['/state-list'], { relativeTo: this.route });
       },
       error: (err) => {
         console.error(err);
@@ -165,6 +132,6 @@ onSave() {
 
 
   goBack() {
-    this.router.navigate(['/state-list']);
+  this.router.navigate(['/state-list'], { relativeTo: this.route });
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,7 +17,7 @@ export class RecordsComponent implements OnInit{
   filteredRecords: any[] = []; // filtered list to show in table
   searchTerm: string = '';
 
-  constructor(private api: ApiService, private router: Router) {}
+  constructor(private api: ApiService, private router: Router, private route: ActivatedRoute) {}
   // toggleSidebar() {
 //   this.sidebarService.toggle();
 // }
@@ -36,12 +36,12 @@ export class RecordsComponent implements OnInit{
   editRecord(client: any){
     this.api.setSelectedClient(client);
     // record-form is a child route of /records
-    this.router.navigate(['/records', 'record-form'], { state: { recordId: client?.clientId } });
+  this.router.navigate(['record-form'], { state: { recordId: client?.clientId } });
   }
  
   addRecord() {
     this.api.clearSelectedClient();
-    this.router.navigate(['/records', 'record-form']);
+  this.router.navigate(['record-form']);
   }
   logout(): void {
   // Clear all local data
