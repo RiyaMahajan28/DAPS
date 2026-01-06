@@ -1,0 +1,32 @@
+<div class="form-container">
+  <div class="form-card">
+    <h2 class="form-title">Add User</h2>
+    <form [formGroup]="uploadForm" (ngSubmit)="submit()" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="emp_id">Employee ID</label>
+        <input id="emp_id" formControlName="emp_id" type="number" placeholder="Enter Employee ID" />
+        <p class="error" *ngIf="uploadForm.get('emp_id')?.invalid && uploadForm.get('emp_id')?.touched">
+          Employee ID is required
+        </p>
+      </div>
+      <div class="form-group">
+        <label for="pan_card_file">Upload PAN Card</label>
+        <input id="pan_card_file" type="file" (change)="onFileChange($event, 'pan_card_file')" />
+        <p class="error" *ngIf="uploadForm.get('pan_card_file')?.invalid && uploadForm.get('pan_card_file')?.touched">
+          PAN Card file is required
+        </p>
+      </div>
+      <div class="form-group">
+        <label for="adhar_card_file">Upload Aadhaar Card</label>
+        <input id="adhar_card_file" type="file" (change)="onFileChange($event, 'adhar_card_file')" />
+        <p class="error" *ngIf="uploadForm.get('adhar_card_file')?.invalid && uploadForm.get('adhar_card_file')?.touched">
+          Aadhaar Card file is required
+        </p>
+      </div>
+      <button type="submit" [disabled]="uploadForm.invalid">Submit</button>
+      <div *ngIf="isSuccess !== null" [ngClass]="{ 'success': isSuccess, 'error': !isSuccess }">
+        {{ responseMsg }}
+      </div>
+    </form>
+  </div>
+</div>

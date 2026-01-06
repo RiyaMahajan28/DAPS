@@ -272,4 +272,17 @@ updateClientZone(body: any): Observable<any> {
       { headers: this.headers }
     );
 }
+  // UPLOAD ADHAR & PAN
+  uploadAdharPan(formData: FormData): Observable<any> {
+    // For file uploads, we need custom headers without Content-Type
+    // as the browser must set it with the proper boundary for multipart/form-data
+    const uploadHeaders = new HttpHeaders({
+      'NorthEyeApiKey': environment.apiKey
+    });
+    return this.http.post(
+      `${this.baseUrl}${environment.endpoints.uploadAdharPan}`,
+      formData,
+      { headers: uploadHeaders }
+    );
+  }
 }

@@ -19,6 +19,8 @@ import { HomeComponent } from '../dynamicUi/home/home.component';
 import { StateListComponent } from '../pages/state-list/state-list.component';
 import { RecordFormComponent } from '../pages/record-form/record-form.component';
 import { authGuard } from '../auth.guard';
+import { SidebarComponent } from '../pages/sidebar/sidebar.component';
+import { UserUploadComponent } from '../pages/sidebar/user-upload.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +37,9 @@ import { authGuard } from '../auth.guard';
         SettingsComponent,
         UiBuilderComponent,
         DynamicUiComponent,
-        HomeComponent
+        HomeComponent,
+        // SidebarComponent,
+        UserUploadComponent
     ],
     imports: [
         CommonModule,
@@ -53,6 +57,7 @@ import { authGuard } from '../auth.guard';
                     { path: 'add-state', component: AddStateComponent },
                     { path: 'add-state/:id', component: AddStateComponent },
                     { path: 'state-list', component: StateListComponent },
+                    { path: 'add-user', component: UserUploadComponent },
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
                 ]
             }

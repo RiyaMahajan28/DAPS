@@ -4,13 +4,12 @@
     {{ isCollapsed ? '☰' : '✖' }}
   </button>
 
-  <ul class="menu">
 
+  <ul class="menu">
     <li *ngIf="loading">Loading menu...</li>
     <li *ngIf="error" class="error">{{ error }}</li>
 
     <ng-container *ngFor="let g of groupedMenus">
-
       <li class="group-title" (click)="toggleGroup(g.idKey)">
         <span>{{ expanded.has(g.idKey) ? '▼' : '►' }}</span>
         <span *ngIf="!isCollapsed">{{ g.name }}</span>
@@ -18,19 +17,17 @@
 
       <ng-container *ngIf="expanded.has(g.idKey)">
         <li
-          *ngFor="let m of g.items"
-          class="menu-item"
-          (click)="onMenuClick(m)"
-        >
+*ngFor="let m of g.items"
+class="menu-item"
+(click)="onMenuClick(m)"
+>
           <span *ngIf="!isCollapsed">•</span>
           <span class="text">
             {{ m.menu_Name || m.Menu_Name || m.MenuName || m.Menu }}
           </span>
-        </li>
+        </li>        
       </ng-container>
-
     </ng-container>
-
   </ul>
 
   <button class="logout-btn" (click)="logout()">Logout</button>

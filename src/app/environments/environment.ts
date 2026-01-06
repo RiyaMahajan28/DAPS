@@ -36,6 +36,8 @@ export const environment = {
 
     cityDD: 'Client/cityDD',
     cityDDBByMultiState: 'Client/cityDDBByMultiState',
-    getLocationByCity: 'Client/getLocationByCity'
+    getLocationByCity: 'Client/getLocationByCity',
+
+    uploadAdharPan: 'Client/uploadAdharPan'
   }
 };

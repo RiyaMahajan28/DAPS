@@ -121,6 +121,7 @@
 // }
 // }
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { UserUploadComponent } from './user-upload.component';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
@@ -222,19 +223,16 @@ export class SidebarComponent implements OnInit {
         .toLowerCase();
 
     if (name.includes('add client')) {
-      // record form is a child route of /records
-      this.router.navigate([ 'record-form']);
-    }
-    else if (name.includes('view client')) {
+      this.router.navigate(['record-form']);
+    } else if (name.includes('view client')) {
       this.router.navigate(['/records']);
+    } else if (name.includes('view state')) {
+      this.router.navigate(['/state-list']);
+    } else if (name.includes('add state')) {
+      this.router.navigate(['add-state']);
+    } else if (name.includes('add user')) {
+      this.router.navigate(['add-user']);
     }
-    else if (name.includes('view state')) {
-    this.router.navigate(['/state-list']);
-  }
-  else if (name.includes('add state')) {
-    // add state lives under /state-list/add
-    this.router.navigate([ 'add-state']);
-  }
   }
 
   logout(): void {
