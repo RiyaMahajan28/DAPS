@@ -124,7 +124,7 @@ import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { UserUploadComponent } from './user-upload.component';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ApiService } from '../../services/api.service';
+import { MenuService } from '../../services/menu.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -150,7 +150,7 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private api: ApiService
+    private menuService: MenuService
   ) {}
 
   ngOnInit(): void {
@@ -173,40 +173,23 @@ export class SidebarComponent implements OnInit {
   }
 
   private loadMenu(): void {
+    // If menu is already loaded, use cached data
+    if (this.menuService.isMenuLoaded()) {
+      this.menus = this.menuService.getCachedMenu();
+      this.processMenuData();
+      this.loading = false;
+      return;
+    }
+
     this.loading = true;
     this.error = null;
 
     const empId = Number(sessionStorage.getItem('emp_id')) || 1;
 
-    this.api.getMenu({ user_id: empId }).subscribe({
-      next: (res: any) => {
-        this.menus = Array.isArray(res) ? res : res?.data || [];
-
-        // Hierarchical menu
-        if (this.menus.length && this.menus[0].subMenu) {
-          this.groupedMenus = this.menus.map((m: any) => ({
-            idKey: `id-${m.menu_id}`,
-            name: m.menu_Name,
-            items: m.subMenu
-          }));
-        }
-        // Flat menu
-        else {
-          const groups: { [key: string]: any[] } = {};
-
-          this.menus.forEach((m: any) => {
-            const parent = m.ParantName || 'Menu';
-            groups[parent] = groups[parent] || [];
-            groups[parent].push(m);
-          });
-
-          this.groupedMenus = Object.keys(groups).map(k => ({
-            idKey: `name-${k}`,
-            name: k,
-            items: groups[k]
-          }));
-        }
-
+    this.menuService.getMenu(empId).subscribe({
+      next: (menus: any[]) => {
+        this.menus = menus;
+        this.processMenuData();
         this.loading = false;
       },
       error: () => {
@@ -214,6 +197,33 @@ export class SidebarComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  private processMenuData(): void {
+    // Hierarchical menu
+    if (this.menus.length && this.menus[0].subMenu) {
+      this.groupedMenus = this.menus.map((m: any) => ({
+        idKey: `id-${m.menu_id}`,
+        name: m.menu_Name,
+        items: m.subMenu
+      }));
+    }
+    // Flat menu
+    else {
+      const groups: { [key: string]: any[] } = {};
+
+      this.menus.forEach((m: any) => {
+        const parent = m.ParantName || 'Menu';
+        groups[parent] = groups[parent] || [];
+        groups[parent].push(m);
+      });
+
+      this.groupedMenus = Object.keys(groups).map(k => ({
+        idKey: `name-${k}`,
+        name: k,
+        items: groups[k]
+      }));
+    }
   }
 
   // 🔥 MAIN ROUTING LOGIC
@@ -237,6 +247,7 @@ export class SidebarComponent implements OnInit {
 
   logout(): void {
     sessionStorage.clear();
+    this.menuService.clearCache();
     this.router.navigate(['/login']).then(() => location.reload());
   }
 }

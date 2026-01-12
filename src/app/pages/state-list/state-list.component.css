@@ -12,9 +12,16 @@
   color: #3c0c81;
 }
 
-.navbar-left {
+.navbar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.navbar-left {
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -22,6 +29,23 @@
   display: flex;
   gap: 1rem;
   align-items: center;
+}
+
+/* Search box */
+.search-input {
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+  min-width: 200px;
+  margin-right: 1rem;
+  transition: border-color 0.3s;
+}
+
+.search-input:focus {
+  border-color: #3c0c81;
+  box-shadow: 0 0 0 2px rgba(60, 12, 129, 0.1);
 }
 
 table {

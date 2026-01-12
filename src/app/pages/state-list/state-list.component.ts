@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-state-list',
@@ -11,6 +12,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class StateListComponent implements OnInit {
 
   states: any[] = [];
+  filteredStates: any[] = []; // filtered list to show in table
+  searchTerm: string = '';
   loading = false;
   
 
@@ -25,6 +28,7 @@ export class StateListComponent implements OnInit {
     this.api.getClientZone().subscribe({
       next: (res: any) => {
         this.states = res?.data || [];
+        this.filteredStates = this.states; // Initialize filtered states
         this.loading = false;
       },
       error: () => this.loading = false
@@ -37,5 +41,42 @@ export class StateListComponent implements OnInit {
 
   addState() {
     this.router.navigate(['add-state']);
+  }
+
+  onSearch(event: any): void {
+    const term = event.target.value.toLowerCase();
+    
+    // Filter by state name, short code, or client name
+    this.filteredStates = this.states.filter(state =>
+      state.zoneName.toLowerCase().includes(term) ||
+      state.zoneshortCode.toLowerCase().includes(term) ||
+      state.clientName.toLowerCase().includes(term) ||
+(term === 'active' && state.zonestatus === 'Y') ||
+  (term === 'inactive' && state.zonestatus === 'N')    );
+  }
+
+  exportToExcel(): void {
+    if (this.states.length === 0) {
+      return;
+    }
+
+    // Prepare data for Excel export
+    const exportData = this.states.map(state => ({
+      'State Name': state.zoneName,
+      'Short Code': state.zoneshortCode,
+      'Status': state.zonestatus === 'Y' ? 'Active' : 'Inactive',
+      'Client': state.clientName
+    }));
+
+    // Create worksheet
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
+
+    // Create workbook
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'State Records');
+
+    // Generate Excel file and download
+    const fileName = `State_Records_${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(wb, fileName);
   }
 }

@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import * as XLSX from 'xlsx';
 // import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
@@ -25,6 +26,7 @@ export class RecordsComponent implements OnInit{
   this.api.getClients().subscribe({
     next: (data:any) => {
       this.records = data?.data;
+      this.filteredRecords = this.records; // Initialize filtered records
         console.log(this.records)
 
     },
@@ -60,13 +62,49 @@ export class RecordsComponent implements OnInit{
 
   console.log('User logged out successfully');
 }
-  // onSearch() {
-  //   const term = this.searchTerm.toLowerCase();
 
-  //   // Filter by clientName or shortCode
-  //   this.filteredRecords = this.records.filter(client =>
-  //     client.clientName.toLowerCase().includes(term) ||
-  //     client.shortCode.toLowerCase().includes(term)
-  //   );
-  // }
+  onSearch(event: any): void {
+    const term = event.target.value.toLowerCase();
+    
+    // Filter by  all columns
+    this.filteredRecords = this.records.filter(client =>
+      client.clientName.toLowerCase().includes(term) ||
+      client.shortCode.toLowerCase().includes(term)||
+      client.status.toLowerCase().includes(term) ||
+  client.created_by?.toLowerCase().includes(term) ||
+  client.companyId.toString().includes(term) ||
+  client.empannelment.toLowerCase().includes(term) ||
+  client.created_on.toLowerCase().includes(term) ||
+  client.clientId.toString().includes(term) 
+    );
+  }
+
+  exportToExcel(): void {
+    if (this.records.length === 0) {
+      return;
+    }
+
+    // Prepare data for Excel export
+    const exportData = this.records.map(record => ({
+      'ID': record.clientId,
+      'Client Name': record.clientName,
+      'Short Code': record.shortCode,
+      'Empannelment': record.empannelment,
+      'Status': record.status === 'Y' ? 'Active' : 'Inactive',
+      'Created On': record.created_on,
+      'Created By': record.created_by || '-',
+      'Company ID': record.companyId
+    }));
+
+    // Create worksheet
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
+
+    // Create workbook
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Client Records');
+
+    // Generate Excel file and download
+    const fileName = `Client_Records_${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(wb, fileName);
+  }
 }

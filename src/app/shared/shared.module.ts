@@ -6,7 +6,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, NgSelectModule],
+  imports: [CommonModule, NgSelectModule, FormsModule, ReactiveFormsModule],
   exports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, NgSelectModule]
 })
 export class SharedModule {}

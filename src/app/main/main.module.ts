@@ -19,6 +19,7 @@ import { HomeComponent } from '../dynamicUi/home/home.component';
 import { StateListComponent } from '../pages/state-list/state-list.component';
 import { RecordFormComponent } from '../pages/record-form/record-form.component';
 import { authGuard } from '../auth.guard';
+import { permissionGuard } from '../permission.guard';
 import { SidebarComponent } from '../pages/sidebar/sidebar.component';
 import { UserUploadComponent } from '../pages/sidebar/user-upload.component';
 
@@ -38,7 +39,6 @@ import { UserUploadComponent } from '../pages/sidebar/user-upload.component';
         UiBuilderComponent,
         DynamicUiComponent,
         HomeComponent,
-        // SidebarComponent,
         UserUploadComponent
     ],
     imports: [
@@ -48,14 +48,14 @@ import { UserUploadComponent } from '../pages/sidebar/user-upload.component';
         RouterModule.forChild([
             {
                 path: '',
-                canActivateChild: [authGuard],
+                canActivateChild: [authGuard], canActivate: [permissionGuard], 
                 children: [
-                    { path: 'dashboard', component: DashboardComponent },
-                    { path: 'location', component: LocationComponent },
-                    { path: 'record-form', component: RecordFormComponent },
+                    { path: 'dashboard', component: DashboardComponent},
+                    { path: 'location', component: LocationComponent},
+                    { path: 'record-form', component: RecordFormComponent},
                     { path: 'records', component: RecordsComponent },
                     { path: 'add-state', component: AddStateComponent },
-                    { path: 'add-state/:id', component: AddStateComponent },
+                    { path: 'add-state/:id', component: AddStateComponent},
                     { path: 'state-list', component: StateListComponent },
                     { path: 'add-user', component: UserUploadComponent },
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' }

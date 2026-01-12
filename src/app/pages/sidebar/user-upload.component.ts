@@ -25,6 +25,7 @@ export class UserUploadComponent {
   onFileChange(event: any, controlName: string) {
     if (event.target.files.length > 0) {
       this.uploadForm.patchValue({ [controlName]: event.target.files[0] });
+      this.uploadForm.get(controlName)?.markAsTouched();
     }
   }
 
@@ -40,13 +41,13 @@ export class UserUploadComponent {
           Swal.fire({ 
             icon: 'success', 
             title: 'Uploaded', 
-            text: res.message || 'Documents uploaded successfully' 
+            text: 'Documents uploaded successfully' 
           });
         } else {
           Swal.fire({ 
             icon: 'error', 
             title: 'Upload Failed', 
-            text: res.message || 'Upload failed' 
+            text: 'Upload failed' 
           });
         }
         this.isSuccess = res.isSuccess;

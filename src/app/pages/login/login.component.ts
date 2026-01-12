@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ApiService } from '../../services/api.service';
+import { MenuService } from '../../services/menu.service';
 
 
 @Component({
@@ -21,7 +22,8 @@ loginForm: FormGroup;
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private api: ApiService   
+    private api: ApiService,
+    private menuService: MenuService
   ) {
     this.loginForm = this.fb.group({
       username: ['',Validators.required],  
@@ -40,8 +42,21 @@ loginForm: FormGroup;
         next: (res: any) => {
           // Save emp_id and show success popup
           sessionStorage.setItem('emp_id', res.user.emP_ID);
-          Swal.fire({ icon: 'success', title: 'Login successful', text: 'Welcome!' }).then(() => {
-            this.router.navigate(['/dashboard']);
+          
+          // Preload menu data
+          this.menuService.getMenu(res.user.emP_ID).subscribe({
+            next: () => {
+              // Menu loaded successfully, navigate to dashboard
+              Swal.fire({ icon: 'success', title: 'Login successful', text: 'Welcome!' }).then(() => {
+                this.router.navigate(['/dashboard']);
+              });
+            },
+            error: () => {
+              // Even if menu loading fails, proceed to dashboard
+              Swal.fire({ icon: 'success', title: 'Login successful', text: 'Welcome!' }).then(() => {
+                this.router.navigate(['/dashboard']);
+              });
+            }
           });
         },
         error: (err: any) => {
