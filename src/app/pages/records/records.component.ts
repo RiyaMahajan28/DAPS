@@ -66,17 +66,39 @@ export class RecordsComponent implements OnInit{
   onSearch(event: any): void {
     const term = event.target.value.toLowerCase();
     
-    // Filter by  all columns
-    this.filteredRecords = this.records.filter(client =>
-      client.clientName.toLowerCase().includes(term) ||
-      client.shortCode.toLowerCase().includes(term)||
-      client.status.toLowerCase().includes(term) ||
-  client.created_by?.toLowerCase().includes(term) ||
-  client.companyId.toString().includes(term) ||
-  client.empannelment.toLowerCase().includes(term) ||
-  client.created_on.toLowerCase().includes(term) ||
-  client.clientId.toString().includes(term) 
-    );
+    // If search is empty, show all records
+    if (!term) {
+      this.filteredRecords = this.records;
+      return;
+    }
+    
+    // Special handling for status searches
+    if (term === 'active' || term === 'inactive' || term === 'y' || term === 'n') {
+      this.filteredRecords = this.records.filter(client => {
+        if (term === 'active' || term === 'y') {
+          return client.status === 'Y';
+        } else if (term === 'inactive' || term === 'n') {
+          return client.status === 'N';
+        }
+        return false;
+      });
+      return;
+    }
+    
+    // Filter by all other columns
+    this.filteredRecords = this.records.filter(client => {
+      const statusDisplay = client.status === 'Y' ? 'active' : 'inactive';
+      
+      return client.clientName.toLowerCase().includes(term) ||
+        client.shortCode.toLowerCase().includes(term) ||
+        client.status.toLowerCase().includes(term) ||
+        statusDisplay.includes(term) ||
+        client.created_by?.toLowerCase().includes(term) ||
+        client.companyId.toString().includes(term) ||
+        client.empannelment.toLowerCase().includes(term) ||
+        client.created_on.toLowerCase().includes(term) ||
+        client.clientId.toString().includes(term);
+    });
   }
 
   exportToExcel(): void {

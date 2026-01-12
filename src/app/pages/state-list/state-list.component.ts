@@ -46,13 +46,35 @@ export class StateListComponent implements OnInit {
   onSearch(event: any): void {
     const term = event.target.value.toLowerCase();
     
-    // Filter by state name, short code, or client name
-    this.filteredStates = this.states.filter(state =>
-      state.zoneName.toLowerCase().includes(term) ||
-      state.zoneshortCode.toLowerCase().includes(term) ||
-      state.clientName.toLowerCase().includes(term) ||
-(term === 'active' && state.zonestatus === 'Y') ||
-  (term === 'inactive' && state.zonestatus === 'N')    );
+    // If search is empty, show all records
+    if (!term) {
+      this.filteredStates = this.states;
+      return;
+    }
+    
+    // Special handling for status searches
+    if (term === 'active' || term === 'inactive' || term === 'y' || term === 'n') {
+      this.filteredStates = this.states.filter(state => {
+        if (term === 'active' || term === 'y') {
+          return state.zonestatus === 'Y';
+        } else if (term === 'inactive' || term === 'n') {
+          return state.zonestatus === 'N';
+        }
+        return false;
+      });
+      return;
+    }
+    
+    // Filter by all other columns
+    this.filteredStates = this.states.filter(state => {
+      const statusDisplay = state.zonestatus === 'Y' ? 'active' : 'inactive';
+      
+      return state.zoneName.toLowerCase().includes(term) ||
+        state.zoneshortCode.toLowerCase().includes(term) ||
+        state.zonestatus.toLowerCase().includes(term) ||
+        statusDisplay.includes(term) ||
+        state.clientName.toLowerCase().includes(term);
+    });
   }
 
   exportToExcel(): void {
